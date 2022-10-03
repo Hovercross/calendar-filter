@@ -1,0 +1,11 @@
+{
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "cSpell.words": [
+        "aiohttp",
+        "getall",
+        "ical",
+        "icalendar",
+        "subcomponents"
+    ]
+}
