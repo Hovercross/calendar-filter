@@ -1,4 +1,5 @@
 import argparse
+import base64
 
 from aiohttp.web import Request, Response, Application, get, run_app
 from aiohttp.client import ClientSession
@@ -50,9 +51,13 @@ async def download_ics(url: str) -> Calendar:
 
 
 async def handle(request: Request):
-    query = request.query
-    ics_url = query.get("ics")
-    raw_excludes: list[str] = query.getall("exclude", [])
+    path_parts = request.path.split("/")
+    ics_url_b64 = path_parts[1]
+    raw_excludes_b64 = path_parts[2]
+
+    ics_url = base64.b64decode(ics_url_b64).decode("utf-8")
+    raw_excludes = base64.b64decode(raw_excludes_b64).decode("utf-8").split(",")
+
     excludes = set((s.lower() for s in raw_excludes))
 
     if not ics_url:
@@ -91,7 +96,7 @@ async def handle(request: Request):
 app = Application()
 app.add_routes(
     [
-        get("/", handle),
+        get("/{parts:.*}", handle),
     ]
 )
 
