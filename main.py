@@ -1,8 +1,13 @@
+import argparse
+
 from aiohttp.web import Request, Response, Application, get, run_app
 from aiohttp.client import ClientSession
 from aiohttp.client_exceptions import InvalidURL
 from icalendar import Calendar
 from icalendar.cal import Event
+
+parser = argparse.ArgumentParser("Calendar filter")
+parser.add_argument("--port", type=int, default=8080)
 
 
 class BaseDownloadError(Exception):
@@ -91,4 +96,5 @@ app.add_routes(
 )
 
 if __name__ == "__main__":
-    run_app(app)
+    args = parser.parse_args()
+    run_app(app, port=args.port)

@@ -5,7 +5,6 @@ description = "Calendar filter to subscribe Google Calendars on your iPhone and 
 authors = ["Adam Peacock <adam@thepeacock.net>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "calendar_filter"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
